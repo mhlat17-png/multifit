@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PulseFit — Fitness Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#07111f;
+      --panel:#0d1b2a;
+      --panel2:#10243a;
+      --text:#f4f7fb;
+      --muted:#b7c3d6;
+      --accent:#5eead4;
+      --accent2:#60a5fa;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      background:radial-gradient(circle at top left,#11213a 0%,var(--bg) 45%);
+      color:var(--text);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{
+      width:min(1120px,92vw);
+      margin:0 auto;
+    }
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(14px);
+      background:rgba(7,17,31,.72);
+      border-bottom:1px solid var(--border);
+    }
+
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.4px;
+    }
+
+    .logo{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      display:grid;
+      place-items:center;
+      color:#03111f;
+      font-weight:900;
+      box-shadow:var(--shadow);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:22px;
+      align-items:center;
+      color:var(--muted);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 20px;
+      border-radius:999px;
+      font-weight:700;
+      border:1px solid transparent;
+      transition:.2s ease;
+      cursor:pointer;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#03111f;
+    }
+
+    .btn-secondary{
+      border-color:var(--border);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+    }
+
+    .btn:hover{transform:translateY(-1px)}
+
+    .hero{
+      padding:84px 0 42px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:28px;
+      align-items:center;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:10px 14px;
+      border:1px solid var(--border);
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    h1{
+      font-size:clamp(44px,7vw,78px);
+      line-height:1.02;
+      margin:18px 0 16px;
+      letter-spacing:-.04em;
+    }
+
+    .lead{
+      font-size:18px;
+      line-height:1.7;
+      color:var(--muted);
+      max-width:56ch;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:28px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:32px;
+    }
+
+    .stat{
+      padding:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-radius:20px;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:24px;
+      margin-bottom:6px;
+    }
+
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      border:1px solid var(--border);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+    }
+
+    .hero-card{
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero-card::before{
+      content:'';
+      position:absolute;
+      inset:auto -20% -25% auto;
+      width:260px;
+      height:260px;
+      background:radial-gradient(circle,rgba(94,234,212,.22),transparent 70%);
+      filter:blur(8px);
+    }
+
+    .workout{
+      padding:18px;
+      border-radius:22px;
+      background:rgba(7,17,31,.72);
+      border:1px solid var(--border);
+      margin-top:14px;
+      position:relative;
+      z-index:1;
+    }
+
+    .workout h3{
+      margin:0 0 8px;
+    }
+
+    .progress{
+      height:12px;
+      background:#091427;
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:10px;
+    }
+
+    .progress span{
+      display:block;
+      height:100%;
+      width:78%;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      border-radius:999px;
+    }
+
+    section{padding:44px 0}
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      align-items:end;
+      margin-bottom:22px;
+    }
+
+    .section-head h2{
+      font-size:clamp(28px,4vw,44px);
+      margin:0;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      max-width:60ch;
+      line-height:1.6;
+      margin:0;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .feature,.program,.testimonial,.pricing{
+      padding:24px;
+    }
+
+    .feature h3,.program h3,.pricing h3{
+      margin:14px 0 10px;
+    }
+
+    .muted{color:var(--muted)}
+
+    .icon{
+      width:52px;
+      height:52px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,rgba(94,234,212,.18),rgba(96,165,250,.18));
+      border:1px solid var(--border);
+      font-size:24px;
+    }
+
+    .program-list{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+    }
+
+    .tag{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(94,234,212,.12);
+      border:1px solid rgba(94,234,212,.22);
+      color:var(--accent);
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .pricing .price{
+      font-size:44px;
+      font-weight:800;
+      margin:12px 0;
+    }
+
+    .pricing ul{
+      padding:0;
+      margin:18px 0 0;
+      list-style:none;
+    }
+
+    .pricing li{
+      padding:10px 0;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+    }
+
+    .quote{
+      font-size:18px;
+      line-height:1.8;
+      color:#eaf2ff;
+    }
+
+    .contact{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    form{
+      display:grid;
+      gap:12px;
+    }
+
+    input,textarea{
+      width:100%;
+      padding:14px 16px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+      font:inherit;
+    }
+
+    textarea{
+      min-height:140px;
+      resize:vertical;
+    }
+
+    .footer{
+      padding:34px 0 48px;
+      color:var(--muted);
+      border-top:1px solid var(--border);
+      margin-top:26px;
+    }
+
+    .mini{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    @media (max-width: 920px){
+      .hero-grid,.grid-3,.program-list,.contact{
+        grid-template-columns:1fr;
+      }
+
+      .nav-links{display:none}
+      .stats{grid-template-columns:1fr}
+      .hero{padding-top:54px}
+      .section-head{align-items:flex-start;flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="logo">P</div>
+        PulseFit
+      </div>
+
+      <nav class="nav-links">
+        <a href="#programs">Programs</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a class="btn btn-primary" href="#contact">Start Free</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">🔥 Personalized training • Group classes • Nutrition support</div>
+          <h1>Train smarter. Get stronger. Feel better.</h1>
+          <p class="lead">
+            PulseFit helps you build a routine that actually sticks with expert coaching, flexible programs,
+            and a motivating community designed for real progress.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Book a consultation</a>
+            <a class="btn btn-secondary" href="#programs">View programs</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><strong>250+</strong><span class="muted">Members transformed</span></div>
+            <div class="stat"><strong>12</strong><span class="muted">Weekly class types</span></div>
+            <div class="stat"><strong>98%</strong><span class="muted">Client satisfaction</span></div>
+          </div>
+        </div>
+
+        <div class="card hero-card">
+          <div class="tag">This week’s highlight</div>
+          <h3 style="margin:16px 0 8px;font-size:28px;">Full-Body Power Session</h3>
+          <p class="muted">
+            A high-energy strength and conditioning workout built to improve endurance, mobility, and confidence.
+          </p>
+
+          <div class="workout">
+            <strong>Workout progress</strong>
+            <div class="progress"><span></span></div>
+            <p class="mini">78% completed — 22 min remaining</p>
+          </div>
+
+          <div class="workout">
+            <strong>Next class</strong>
+            <p class="muted">HIIT Burn • Friday • 6:30 AM</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Built for real results</h2>
+            <p>
+              Everything is designed to reduce friction and keep members consistent, from onboarding to daily training.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card feature">
+            <div class="icon">💪</div>
+            <h3>Personal coaching</h3>
+            <p class="muted">Custom plans, progress tracking, and expert guidance tailored to your goals.</p>
+          </article>
+
+          <article class="card feature">
+            <div class="icon">🧘</div>
+            <h3>Mobility & recovery</h3>
+            <p class="muted">Recovery sessions, stretching routines, and smarter rest so you can train consistently.</p>
+          </article>
+
+          <article class="card feature">
+            <div class="icon">📱</div>
+            <h3>Easy scheduling</h3>
+            <p class="muted">Book classes, manage sessions, and stay organized from any device.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="programs">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Programs that fit your routine</h2>
+            <p>Choose the format that matches your schedule, experience level, and fitness goals.</p>
+          </div>
+        </div>
+
+        <div class="program-list">
+          <article class="card program">
+            <span class="tag">Beginner friendly</span>
+            <h3>Starter Reset</h3>
+            <p class="muted">Learn the basics, improve form, and create a sustainable weekly habit.</p>
+          </article>
+
+          <article class="card program">
+            <span class="tag">Popular</span>
+            <h3>Strength Builder</h3>
+            <p class="muted">Progressive lifting, core work, and conditioning to build lean muscle and confidence.</p>
+          </article>
+
+          <article class="card program">
+            <span class="tag">Fast paced</span>
+            <h3>HIIT Burn</h3>
+            <p class="muted">Short, intense sessions that maximize calorie burn and cardio output.</p>
+          </article>
+
+          <article class="card program">
+            <span class="tag">Recovery focused</span>
+            <h3>Flex & Restore</h3>
+            <p class="muted">Mobility drills, yoga-inspired flows, and recovery work for a balanced body.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>What members say</h2>
+            <p>Social proof helps build trust and shows new visitors the kind of results they can expect.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card testimonial">
+            <p class="quote">“The coaching is practical, motivating, and easy to follow. I finally stayed consistent.”</p>
+            <p class="muted">— Jordan P.</p>
+          </article>
+
+          <article class="card testimonial">
+            <p class="quote">“The classes are structured but never boring. I’ve made more progress in 8 weeks than I did in a year.”</p>
+            <p class="muted">— Maya S.</p>
+          </article>
+
+          <article class="card testimonial">
+            <p class="quote">“Everything feels premium, from the workouts to the scheduling and support.”</p>
+            <p class="muted">— Amir T.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Simple pricing</h2>
+            <p>Keep pricing easy to understand so visitors can choose quickly without extra friction.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <article class="card pricing">
+            <h3>Starter</h3>
+            <div class="price">$29</div>
+            <p class="muted">Per month</p>
+            <ul>
+              <li>2 group classes weekly</li>
+              <li>Workout app access</li>
+              <li>Community support</li>
+            </ul>
+          </article>
+
+          <article class="card pricing" style="border:1px solid rgba(94,234,212,.35)">
+            <span class="tag">Best value</span>
+            <h3>Pro</h3>
+            <div class="price">$59</div>
+            <p class="muted">Per month</p>
+            <ul>
+              <li>Unlimited classes</li>
+              <li>Personalized plan</li>
+              <li>Monthly progress review</li>
+            </ul>
+          </article>
+
+          <article class="card pricing">
+            <h3>Elite</h3>
+            <div class="price">$99</div>
+            <p class="muted">Per month</p>
+            <ul>
+              <li>1:1 coaching</li>
+              <li>Nutrition guidance</li>
+              <li>Priority booking</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Start your trial</h2>
+            <p>Use this form for leads, bookings, or newsletter signups. It’s simple and conversion-friendly.</p>
+          </div>
+        </div>
+
+        <div class="contact">
+          <div class="card feature">
+            <h3>Get in touch</h3>
+            <p class="muted">Email: hello@pulsefit.com</p>
+            <p class="muted">Phone: +61 3 9000 0000</p>
+            <p class="muted">Location: Melbourne, VIC</p>
+          </div>
+
+          <div class="card feature">
+            <form>
+              <input type="text" placeholder="Full name" />
+              <input type="email" placeholder="Email address" />
+              <textarea placeholder="Tell us your goals"></textarea>
+              <button class="btn btn-primary" type="button">Send inquiry</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2026 PulseFit. Built for strength, consistency, and confidence.</div>
+  </footer>
+
+  <script>
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      if (btn.textContent.includes('Send inquiry')) {
+        alert('Thanks! Your inquiry has been sent.');
+      }
+    });
+  </script>
+</body>
+</html>
